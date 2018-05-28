@@ -1,0 +1,3 @@
+projet4oc_homepage:
+    path:     /
+    defaults: { _controller: projet4ocBundle:Default:index }

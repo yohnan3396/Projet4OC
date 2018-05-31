@@ -5,14 +5,7 @@ parameters:
 
 services:
     # default configuration for services in *this* file
-    BookingManager:
-        class: projet4ocBundle/Service/BookingManager
-        autowire: false
-        # manually wire all arguments
-        arguments:
-            - '@projet4ocBundle\Service\BookingManager'
-            - '@mailer'
-            - 'superadmin@example.com'
+
     _defaults:
         # automatically injects dependencies in your services
         autowire: true

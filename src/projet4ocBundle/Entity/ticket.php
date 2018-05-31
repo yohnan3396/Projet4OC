@@ -60,7 +60,7 @@ class Ticket
     private $lowPrice;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Booking", inversedBy="Tickets")
+     * @ORM\ManyToOne(targetEntity="Booking", inversedBy="Ticket")
      * @ORM\JoinColumn(name="booking_id", referencedColumnName="id")
      */
     private $booking;

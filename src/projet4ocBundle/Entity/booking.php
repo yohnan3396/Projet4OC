@@ -59,7 +59,7 @@ class Booking
     /**
      * @ORM\OneToMany(targetEntity="Ticket", mappedBy="Booking")
      */
-    private $tickets;
+    private $ticket;
 
 
     /**
@@ -193,16 +193,15 @@ class Booking
     }
 
 
-    public function addTicket(Ticket $ticket)
+    public function setTicket(Ticket $ticket)
     {
         $this->tickets[] = $ticket;
-        $ticket->setBooking($this);
         return $this;
     }
 
-    public function getTickets()
+    public function getTicket()
     {
-        return $this->tickets;
+        return $this->ticket;
     }
 
 }

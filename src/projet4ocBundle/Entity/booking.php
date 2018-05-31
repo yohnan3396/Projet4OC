@@ -3,6 +3,7 @@
 namespace projet4ocBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * orders
@@ -57,11 +58,14 @@ class Booking
     private $visitDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ticket", mappedBy="Booking")
+     * @ORM\OneToMany(targetEntity="Ticket", mappedBy="booking")
      */
-    private $ticket;
+    private $tickets;
 
-
+    public function __construct()
+    {   
+        $this->tickets[] = new ArrayCollection();
+    }
     /**
      * Get id
      *
@@ -193,15 +197,16 @@ class Booking
     }
 
 
-    public function setTicket(Ticket $ticket)
+    public function addTicket(Ticket $ticket)
     {
         $this->tickets[] = $ticket;
+        $ticket->setBooking($this);
         return $this;
     }
 
-    public function getTicket()
+    public function getTickets()
     {
-        return $this->ticket;
+        return $this->tickets;
     }
 
 }

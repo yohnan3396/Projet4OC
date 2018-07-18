@@ -1,119 +1,269 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
+<html lang="en-US" class="no-js">
+    <head>
     
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-    <meta name="format-detection" content="telephone=no" />
-           
-        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/> 
-            <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
-            <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> 
-            <link href="{{ asset('css/animsition.min.css') }}" rel="stylesheet"/>
-            <link href="{{ asset('css/magnific-popup.css') }}" rel="stylesheet"/>         
-            <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css"/>     
-      <title>Billeterie</title>
-  </head>
-<body class="animsition">
-    <header>
-      <div class="container">
-          <div class="logo">
-             <a href="index.html">
-                Billeterie
-             </a>
-          </div>
-          <div class="nav-menu-icon">
-             <a href="#"><i></i></a>
-          </div>
-          <nav class="menu">
-            <ul>
-                <li><a href="#">Home<span class="fa fa-angle-down"></span></a>
-                    <ul class="dropmenu">
-                        <li><a href="index.html" class="animsition-link">ShowCase</a></li>
-                        <li><a href="index_slider.html" class="animsition-link">Slider</a></li>
-                        <li><a href="index_video.html" class="animsition-link">Video</a></li> 
-                        <li><a href="index_scroll.html" class="animsition-link">Ultra Minimal</a></li>
-                        <li><a href="index_onepage.html" class="animsition-link">OnePage</a></li>   
-                    </ul>
-                </li>
-                <li><a href="#">Portfolio<span class="fa fa-angle-down"></span></a>
-                    <ul class="dropmenu">
-                        <li><a href="#" class="submenu">boxed with gutter<span class="fa fa-angle-down"></span></a>
-                            <ul>
-                                <li><a href="portfolio_mas_gutter_col2.html" class="animsition-link">2 columns</a></li>
-                                <li><a href="portfolio_mas_gutter_col3.html" class="animsition-link">3 columns</a></li>
-                                <li><a href="portfolio_mas_gutter_col4.html" class="animsition-link">4 columns</a></li>
-                                <li><a href="portfolio_filter.html" class="animsition-link">filter</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#" class="submenu">boxed without gutter<span class="fa fa-angle-down"></span></a>
-                            <ul>
-                                <li><a href="portfolio_mas_nogutter_col2.html" class="animsition-link">2 columns</a></li>
-                                <li><a href="portfolio_mas_nogutter_col3.html" class="animsition-link">3 columns</a></li>
-                                <li><a href="portfolio_mas_nogutter_col4.html" class="animsition-link">4 columns</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#" class="submenu">detail<span class="fa fa-angle-down"></span></a>
-                            <ul>
-                                <li><a href="portfolio_detail2.html" class="animsition-link">Detail 1</a></li>
-                                <li><a href="portfolio_detail3.html" class="animsition-link">Detail 2</a></li>
-                                <li><a href="portfolio_detail4.html" class="animsition-link">Detail 3</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#">Pages<span class="fa fa-angle-down"></span></a>
-                    <ul class="dropmenu">
-                        <li><a href="about2.html" class="animsition-link">About Us</a></li>
-                        <li><a href="faq3.html" class="animsition-link">FAQ</a></li>
-                        <li><a href="team_2.html" class="animsition-link">Team</a></li> 
-                        <li><a href="price.html" class="animsition-link">Price</a></li>
-                        <li><a href="contact.html" class="animsition-link">Contact Us</a></li>  
-                    </ul>
-                </li>
-                <li><a href="#">shop<span class="fa fa-angle-down"></span></a>
-                    <ul class="dropmenu">
-                        <li><a href="shop_left_filter.html" class="animsition-link">List</a></li>
-                        <li><a href="shop_detail.html" class="animsition-link">details</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">blog<span class="fa fa-angle-down"></span></a>
-                    <ul class="dropmenu">
-                        <li><a href="blog_boxed_masonry_3cols.html" class="animsition-link">List</a></li>
-                        <li><a href="blog_detail.html" class="animsition-link">Details</a></li>
-                    </ul>
-                </li>
-            </ul>
-          </nav> 
-        </div>   
-    </header>
+        <title>Musée du louvre</title>
+        
+        <!-- Meta Data -->
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="Erilisdesign.com">
+        
+        <!-- CSS Global Compulsory -->
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('style.css') }}" rel="stylesheet" type="text/css"/>
+
+        <!-- CSS Implementing Plugins -->
+        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('css/flexslider.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('css/magnific-popup.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('css/vegas.min.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('css/photoswipe/photoswipe.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('css/photoswipe/default-skin/default-skin.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css"/>
+
+                
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+            <script src="js/respond.min.js"></script>
+        <![endif]-->
+        
+        <!--[if lt IE 11]>
+            <link rel="stylesheet" type="text/css" href="css/ie.css">
+        <![endif]-->
+        
+        <!-- Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i%7CRoboto:100,300,400,500,700,900' rel='stylesheet' type='text/css'>
+        
+        <!-- JS -->
+        <script type="text/javascript" src="js/modernizr.js"></script>
+        
+        <!-- Faviconss -->
+        <link rel="shortcut icon" href="images/favicon.ico">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+    </head>
+    <body>
     
-    <div class="main-wrapp"> 
-       <div class="container">
-     {% block body %}{% endblock %}
-       </div>
-    </div>
-    
-    <footer>
-        <div class="copyright">
-            <span>&copy; 2018 <b>Yohann KIPFER</b> All right reserved.<br>
-                Projet OpenClassRooms Symfony</span>
-        </div>  
-    </footer>
-    
-<script src="{{ asset('js/jquery-2.1.3.min.js') }}"></script>
+        <div id="preloader">
+            <div id="loading-animation"></div>
+        </div>
+        
+        <div class="main-container">
+        
+            <!-- Main Header -->
+            <header class="main-header">
+                <div class="header-block">
+                    <!-- Header Logo -->
+                    <a class="header-logo load-content" href="#home">
+                    Musée du louvre
+                    </a>
+                    <button type="button" class="nav-toggle">
+                        <span></span>
+                    </button>
+                </div>
+                <!-- Header Nav -->
+                <nav class="header-nav">
+                    <ul class="nav">
+                        <li><a href="#home" class="load-content">Accueil</a></li>
+                        <li><a href="#billeterie" class="load-content">La billeterie </a></li>
+     
+                    </ul>
+                </nav>
+            </header>
+
+            <!-- Home Side -->
+            <div class="home-side">
+            
+                <!-- Section - Home -->
+                <section id="home" class="section fullscreen-element sm-pt-180 sm-pb-180">
+                    <div class="overlay">
+                        <div class="overlay-wrapper">
+                            <div class="overlay-inner cover-background"><img src="https://culturebox.francetvinfo.fr/sites/default/files/assets/images/2015/06/maxpeopleworld849644.jpg"></div>
+                            <div class="overlay-inner background-dark-5 opacity-50"></div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <div class="table-content">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                     
+                                        <p class="lead text-white animated onstart" style="font-size:15px;" data-animation="fadeInUp" data-animation-delay="600">Commandez vos billets directement sur internet !</p>
+                                        <div class="btn-group-alt animated onstart" data-animation="fadeInUp" data-animation-delay="900">
+                                            <a href="#billeterie" class="btn btn-noradius btn-white load-content">Commander des billets</a>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Right Side -->
+            <div class="right-side">
+            
+                <!-- Section - About -->
+                <section id="billeterie" class="section on-menu">
+                    <div class="container-fluid">
+                    <div style="font-size:30px; "><a href="#home" class="load-content" style="color:black;"><i class="fa fa-chevron-left"></i></a></div> 
+                             {% block body %}{% endblock %}
+
+
+
+                    
+                </section>
+                
+                <!-- Section - Sample -->
+            
+                
+                <!-- Section - Contact -->
+                <section id="contact" class="section background-grey on-menu">
+                    <div class="container-fluid">
+                                            <div style="font-size:30px; "><a href="#home" class="load-content" style="color:black;"><i class="fa fa-chevron-left"></i></a></div> 
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 text-center">
+                                <h3 class="heading-uppercase">Nous contacter</h3>
+                                <div class="divider divider-alt divider-dark divider-center"></div>
+                                <p class="lead mb-50">Formulaire de contact</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="contact-forn">
+                                    <form class="mb-0" id="cf" name="cf" action="include/sendemail.php" method="post">
+                                        <div class="row">
+                                        
+                                            <div class="form-process"></div>
+                                        
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" id="cf-name" name="cf-name" placeholder="Votre nom" class="form-control required">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="email" id="cf-email" name="cf-email" placeholder="Votre email" class="form-control required">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12">
+                                                <div class="form-group">
+                                                    <input type="text" id="cf-subject" name="cf-subject" placeholder="Motif du contact" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 mb-20">
+                                                <div class="form-group">
+                                                    <textarea name="cf-message" id="cf-message" placeholder="Message" class="form-control required" rows="7"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 hidden">
+                                                <input type="text" id="cf-botcheck" name="cf-botcheck" value="" class="form-control" />
+                                            </div>
+                                            <div class="col-md-12 text-center">
+                                                <button class="btn btn-noradius" type="submit" id="cf-submit" name="cf-submit">Envoyer</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="contact-form-result text-center pt-10"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+            
+            <!-- Footer -->
+            <footer class="site-footer">
+                <div class="container-fluid">
+                    <p class="copyright">© 2018 Musée du louvre - Tous droits réservés </p>
+                    <nav class="socials-icons">
+
+                        <ul>
+                            <li><a href="#" class="social-icon"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#" class="social-icon"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#" class="social-icon"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#" class="social-icon"><i class="fa fa-instagram"></i></a></li>
+                    
+                        </ul>
+                    </nav>
+                </div>
+            </footer><!-- .site-footer end -->
+            
+            <!-- Root element of PhotoSwipe. Must have class pswp. -->
+            <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+                <!-- Background of PhotoSwipe. 
+                     It's a separate element as animating opacity is faster than rgba(). -->
+                <div class="pswp__bg"></div>
+
+                <!-- Slides wrapper with overflow:hidden. -->
+                <div class="pswp__scroll-wrap">
+
+                    <!-- Container that holds slides. 
+                        PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                        Don't modify these 3 pswp__item elements, data is added later on. -->
+                    <div class="pswp__container">
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                    </div>
+
+                    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                    <div class="pswp__ui pswp__ui--hidden">
+
+                        <div class="pswp__top-bar">
+                            <div class="pswp__counter"></div>
+                            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                            <button class="pswp__button pswp__button--share" title="Share"></button>
+                            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                            <div class="pswp__preloader">
+                                <div class="pswp__preloader__icn">
+                                    <div class="pswp__preloader__cut">
+                                        <div class="pswp__preloader__donut"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                            <div class="pswp__share-tooltip"></div> 
+                        </div>
+
+                        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+
+                        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+                        <div class="pswp__caption">
+                            <div class="pswp__caption__center"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        
+        </div>
+        
+        <!-- JS -->
+<script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/isotope.pkgd.min.js') }}"></script>
-<script src="{{ asset('js/jquery.countTo.js') }}"></script>
-<script src="{{ asset('js/jquery.animsition.min.js') }}"></script>
-<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
-<script src="{{ asset('js/jquery.sliphover.min.js') }}"></script>
-<script src="{{ asset('js/idangerous.swiper.min.js') }}"></script>
-<script src="{{ asset('js/all.js') }}"></script>
+<script src="{{ asset('js/plugins.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
 
-</body>
+
+
+
+    </body>
 </html>
-
-
-

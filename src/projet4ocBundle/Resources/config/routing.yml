@@ -1,9 +1,0 @@
-projet4oc_homepage:
-    path:     /
-    defaults: { _controller: projet4ocBundle:Default:index }
-
-oc_platform_add:
-    path:      /add
-    defaults:
-        _controller: projet4ocBundle:Default:add
-

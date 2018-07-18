@@ -1,5 +1,5 @@
-projet4oc:
-    resource: "@projet4ocBundle/Resources/config/routing.yml"
+core:
+    resource: "@CoreBundle/Resources/config/routing.yml"
     prefix:   /
 
 app:

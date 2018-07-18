@@ -1,0 +1,171 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<html>
+  <body>
+
+
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center">
+            <h3 class="heading-uppercase">Billeterie</h3>
+            <div class="divider divider-alt divider-dark divider-center"></div>
+           <p class="lead mb-50">Commander des billets</p>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+          <div class="contact-forn">
+              {{ form_start(form, {'attr': {'class': 'mb-0'}}) }}  
+
+              {{ form_errors(form) }}
+                
+                <div class="col-md-6 col-sm-6">
+                   <div class="form-group">
+
+
+                    {{ form_widget(form.dateVisite, {'attr': {'class': 'form-control'}}) }}
+                    
+                    {{ form_errors(form.dateVisite) }}
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-sm-6">
+                   <div class="form-group">
+
+
+                    {{ form_widget(form.typeCmd, {'attr': {'class': 'form-control', 'placeholder': 'Votre adresse email'}}) }}
+                    
+                    {{ form_errors(form.typeCmd) }}
+
+                  </div>
+
+                </div>
+
+
+                <div class="col-md-12 col-sm-12">
+                   <div class="form-group">
+
+
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Votre adresse email'}}) }}
+                    
+                    {{ form_errors(form.email) }}
+
+                  </div>
+
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                   <div class="form-group">
+
+                  {{ form_start(form.billets, {'attr': {'class': 'mb-0'}}) }}  
+
+
+
+                  {{ form_end(form) }}         
+                  </div>
+
+                </div>
+
+
+              {{ form_end(form) }}          
+          </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+  <a href="#" id="add_billet" class="btn btn-default">Ajouter un billet</a>
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    
+    var $container = $('div#corebundle_commande_billets');
+
+
+    var index = $container.find(':input').length;
+
+    
+    $('#add_billet').click(function(e) {
+      addCategory($container);
+
+      e.preventDefault(); 
+      return false;
+    });
+
+
+    if (index == 0) {
+      addCategory($container);
+    } else {
+
+      $container.children('div').each(function() {
+        addDeleteLink($(this));
+      });
+    }
+
+
+    function addCategory($container) {
+
+      var template = $container.attr('data-prototype')
+        .replace(/__name__label__/g, 'Billet n°' + (index+1))
+        .replace(/__name__/g,        index)
+      ;
+
+
+      var $prototype = $(template);
+
+
+      addDeleteLink($prototype);
+
+
+      $container.append($prototype);
+
+
+      index++;
+    }
+
+
+    function addDeleteLink($prototype) {
+
+      var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+
+      $prototype.append($deleteLink);
+
+     
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+
+        e.preventDefault();
+        return false;
+      });
+    }
+  });
+</script>
+
+
+
+
+</div>
+
+  </body>
+</html>
+
+{% endblock %}

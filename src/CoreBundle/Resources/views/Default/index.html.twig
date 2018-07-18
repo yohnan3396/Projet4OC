@@ -59,18 +59,8 @@
                   </div>
 
                 </div>
-
-                <div class="col-md-12 col-sm-12">
-                   <div class="form-group">
-
-                  {{ form_start(form.billets, {'attr': {'class': 'mb-0'}}) }}  
-
-
-
-                  {{ form_end(form) }}         
-                  </div>
-
-                </div>
+              
+   
 
 
               {{ form_end(form) }}          
@@ -78,6 +68,12 @@
       </div>
     </div>
 
+<style type="text/css">
+.billetsDiv .noLabel label
+{
+  display: none;
+}
+</style>
 
 
 
@@ -86,9 +82,7 @@
 
 
 
-
-  <a href="#" id="add_billet" class="btn btn-default">Ajouter un billet</a>
-
+<center><button href="#" id="add_billet" class="btn btn-noradius" type="button" id="cf-submit" name="cf-submit">Ajouter un billet</button></center>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -96,9 +90,10 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    
-    var $container = $('div#corebundle_commande_billets');
 
+
+    var $container = $('div#corebundle_commande_billets');
+    $container.children('div').addClass('col-md-6');
 
     var index = $container.find(':input').length;
 

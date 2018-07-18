@@ -21,13 +21,13 @@ class BilletType extends AbstractType
     {
         $builder
           ->add('nom', TextType::class, array(
-            'attr' => ['class' => 'form-control']         
+            'attr' => ['class' => 'form-control noLabel']
           ))
           ->add('prenom', TextType::class, array(
-            'attr' => ['class' => 'form-control']         
+            'attr' => ['class' => 'form-control noLabel']         
           ))
           ->add('country', TextType::class, array(
-            'attr' => ['class' => 'form-control']         
+            'attr' => ['class' => 'form-control noLabel']         
           ))
           ->add('dateNaissance', DateType::class, array(
             'widget' => 'single_text',

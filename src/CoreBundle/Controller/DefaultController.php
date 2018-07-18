@@ -21,6 +21,7 @@ class DefaultController extends Controller
 	      $em->persist($commande);
 	      $em->flush();
 
+        $this->redirectToRoute('@Core/Default/payment.html.twig');
 	    }
 
 

@@ -3,6 +3,7 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
 * Billet
@@ -39,7 +40,7 @@ private $nom;
 
 /**
  * @var string
- *
+ * @Assert\notBlank(message="Trop long")
  * @ORM\Column(name="prenom", type="string", length=255)
  */
 private $prenom;

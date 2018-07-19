@@ -15,11 +15,20 @@ class DefaultController extends Controller
 
 	    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 	      $em = $this->getDoctrine()->getManager();
+
+
+
+
+
         foreach ($commande->getBillets() as $billet) {
           $commande->addBillet($billet);
         }
+
+        $commande->setTotalPrice('15');        
 	      $em->persist($commande);
-	      $em->flush();
+
+        $em->flush();
+
 
         $this->redirectToRoute('@Core/Default/payment.html.twig');
 	    }

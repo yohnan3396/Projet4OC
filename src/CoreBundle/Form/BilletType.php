@@ -29,11 +29,7 @@ class BilletType extends AbstractType
           ->add('country', TextType::class, array(
             'attr' => ['class' => 'form-control noLabel']         
           ))
-          ->add('dateNaissance', DateType::class, array(
-            'widget' => 'single_text',
-            'html5' => true,
-            'attr' => ['class' => 'form-control']
-          ))
+          ->add('dateNaissance', DateType::class)
           ->add('typeBillet', ChoiceType::class, array(
             'choices' => array('Normal' => '0', 'Réduit*' => '1', 'Enfant (-12 ans)' => '2', 'Sénior (+ 65 ans)' => '3'),
             'expanded' => true,

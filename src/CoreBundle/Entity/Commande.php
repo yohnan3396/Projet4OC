@@ -3,6 +3,8 @@
 namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
 * Commande
@@ -12,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 */
 class Commande
 {
+
 
 /**
  * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Billet", mappedBy="commande", cascade={"persist", "remove"})
@@ -37,7 +40,7 @@ private $dateCommande;
 
 /**
  * @var string
- *
+ * @Assert\NotBlank()
  * @ORM\Column(name="email", type="string", length=255)
  */
 private $email;
@@ -192,10 +195,12 @@ public function setDateVisite($dateVisite)
 public function getDateVisite()
 {
     return $this->dateVisite;
+
 }
 /**
  * Constructor
  */
+
 public function __construct()
 {
     $this->billets = new \Doctrine\Common\Collections\ArrayCollection();
@@ -211,7 +216,7 @@ public function __construct()
 public function addBillet(\CoreBundle\Entity\Billet $billet)
 {
 
-    $this->billetswx[] = $billet;
+    $this->billets[] = $billet;
     $billet->setCommande($this);
 
     return $this;

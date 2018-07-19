@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -21,19 +22,14 @@ class CommandeType extends AbstractType
     {
 
         $builder
-          ->add('dateCommande', HiddenType::class)
-          ->add('email', TextType::class)
+          ->add('dateCommande', DateType::class)
+          ->add('email', EmailType::class)
           ->add('typeCmd', ChoiceType::class, array(
             'choices' => array('Journée' => '0', 'Demi-journée' => '1'),
             'expanded' => true,
             'multiple' => false
           ))
-          ->add('totalPrice', HiddenType::class)
-          ->add('dateVisite', DateType::class, array(
-            'widget' => 'single_text',
-            'html5' => true,
-            'attr' => ['class' => 'js-datepicker'],
-          ))
+          ->add('dateVisite', DateType::class)
           ->add('billets', CollectionType::class, array(
             'entry_type'   => BilletType::class,
             'allow_add'    => true,

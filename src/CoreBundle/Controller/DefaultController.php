@@ -10,7 +10,7 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     {
-	    $commande = new Commande();
+      $commande = new Commande();
    		$form = $this->createForm(CommandeType::class, $commande);
 
 	    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -22,17 +22,16 @@ class DefaultController extends Controller
 
         foreach ($commande->getBillets() as $billet) {
           $commande->addBillet($billet);
+
         }
 
         $commande->setTotalPrice('15'); 
         $commande->setDateCommande(new \DateTime('now'));
-      
-	      $em->persist($commande);
+        $commande->setDateVisite(new \DateTime('now'));
 
+	      $em->persist($commande);
         $em->flush();
 
-
-        $this->redirectToRoute('@Core/Default/payment.html.twig');
 	    }
 
 

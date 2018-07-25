@@ -116,22 +116,45 @@ input[type="radio"] + label
 }
 </style>
 
-<p>Date: <input type="text" id="datepicker"></p>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
 <script type="text/javascript">
-  $( function() {
-    $( "#datepicker" ).datepicker();
-  } );
+function disableDays(date) {
+
+  var holidays = ["2018-08-15","2018-11-01","2018-12-25"];
+
+  var datestring = jQuery.datepicker.formatDate('yy-mm-dd', date);
+  return [ holidays.indexOf(datestring) == -1 ];
+
+
+}
+var dateToday = new Date(); 
+
+
+
 
 
 
   $(document).ready(function() {
 
-
+       $('#corebundle_commande_dateVisite').datepicker({
+          beforeShowDay: disableDays,
+          closeText: 'Fermer',
+          prevText: 'Précédent',
+          nextText: 'Suivant',
+          minDate: dateToday,
+          currentText: 'Aujourd\'hui',
+          monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+          monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+          dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+          dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+          dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+          weekHeader: 'Sem.',
+          dateFormat: 'yy-mm-dd'
+      });
     var $container = $('div#corebundle_commande_billets');
     $container.children('div').addClass('col-md-6');
 
@@ -163,7 +186,22 @@ input[type="radio"] + label
         .replace(/__name__/g,        index)
       ;
 
+    $container.delegate('.js-datepicker','focus',function(evt){
 
+       $(this).datepicker({
+          closeText: 'Fermer',
+          prevText: 'Précédent',
+          nextText: 'Suivant',
+          currentText: 'Aujourd\'hui',
+          monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+          monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+          dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+          dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+          dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+          weekHeader: 'Sem.',
+          dateFormat: 'yy-mm-dd'
+      });
+    });
 
 
       var $prototype = $(template);

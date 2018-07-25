@@ -29,7 +29,11 @@ class CommandeType extends AbstractType
             'expanded' => true,
             'multiple' => false
           ))
-          ->add('dateVisite', DateType::class)
+          ->add('dateVisite', DateType::class, array(
+            'attr' => ['class' => 'form-control js-datepicker', 'format' => 'dd/MM/yyyy'],
+            'label' => "Date de la visite",   
+            'widget' => 'single_text'
+          ))
           ->add('billets', CollectionType::class, array(
             'entry_type'   => BilletType::class,
             'allow_add'    => true,

@@ -32,10 +32,9 @@ class BilletType extends AbstractType
             'label' => "Pays de résidence",            
           ))
           ->add('dateNaissance', DateType::class, array(
-            'attr' => ['class' => 'form-control', 'class' => 'js-datepicker'],
+            'attr' => ['class' => 'form-control js-datepicker', 'format' => 'dd/MM/yyyy'],
             'label' => "Date de naissance",   
-             'widget' => 'single_text',
-              'html5' => false,         
+            'widget' => 'single_text'
           ))
           ->add('typeBillet', ChoiceType::class, array(
             'choices' => array('Normal' => '0', 'Réduit*' => '1'),

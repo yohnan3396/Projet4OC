@@ -10,8 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 class BilletType extends AbstractType
 {
     /**
@@ -21,18 +20,27 @@ class BilletType extends AbstractType
     {
         $builder
           ->add('nom', TextType::class, array(
-            'attr' => ['class' => 'form-control noLabel']
+            'attr' => ['class' => 'form-control'],
+            'label' => "Nom",
           ))
           ->add('prenom', TextType::class, array(
-            'attr' => ['class' => 'form-control noLabel']         
+            'attr' => ['class' => 'form-control'],
+            'label' => "Prénom",         
           ))
-          ->add('country', TextType::class, array(
-            'attr' => ['class' => 'form-control noLabel']         
+          ->add('country', CountryType::class, array(
+            'attr' => ['class' => 'form-control'],
+            'label' => "Pays de résidence",            
           ))
-          ->add('dateNaissance', DateType::class)
+          ->add('dateNaissance', DateType::class, array(
+            'attr' => ['class' => 'form-control', 'class' => 'js-datepicker'],
+            'label' => "Date de naissance",   
+             'widget' => 'single_text',
+              'html5' => false,         
+          ))
           ->add('typeBillet', ChoiceType::class, array(
-            'choices' => array('Normal' => '0', 'Réduit*' => '1', 'Enfant (-12 ans)' => '2', 'Sénior (+ 65 ans)' => '3'),
+            'choices' => array('Normal' => '0', 'Réduit*' => '1'),
             'expanded' => true,
+            'label' => "Type de billet",   
             'multiple' => false,
             'attr' => ['class' => 'form-control']         
           ));

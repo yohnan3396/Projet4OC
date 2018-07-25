@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class CommandeType extends AbstractType
 {
@@ -22,10 +23,9 @@ class CommandeType extends AbstractType
     {
 
         $builder
-          ->add('dateCommande', DateType::class)
           ->add('email', EmailType::class)
           ->add('typeCmd', ChoiceType::class, array(
-            'choices' => array('Journée' => '0', 'Demi-journée' => '1'),
+            'choices' => array('Journée' => 'Journée', 'Demi-journée' => 'Demi-journée'),
             'expanded' => true,
             'multiple' => false
           ))
@@ -35,6 +35,7 @@ class CommandeType extends AbstractType
             'allow_add'    => true,
             'allow_delete' => true,
             'attr' => ['class' => 'billetsDiv'],
+            'label' => false,
           ))
           ->add('save',      SubmitType::class);
 

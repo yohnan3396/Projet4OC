@@ -24,7 +24,9 @@ class DefaultController extends Controller
           $commande->addBillet($billet);
         }
 
-        $commande->setTotalPrice('15');        
+        $commande->setTotalPrice('15'); 
+        $commande->setDateCommande(new \DateTime('now'));
+      
 	      $em->persist($commande);
 
         $em->flush();

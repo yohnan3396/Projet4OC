@@ -26,8 +26,11 @@
                    <div class="form-group">
 
 
+                    {{ form_label(form.dateVisite, "Date de la visite*", {'label_attr': {'class': ''}}) }}
+
                     {{ form_widget(form.dateVisite, {'attr': {'class': 'form-control'}}) }}
                     
+
                     {{ form_errors(form.dateVisite) }}
 
                   </div>
@@ -37,7 +40,7 @@
 
                 <div class="col-md-6 col-sm-6">
                    <div class="form-group">
-
+                    {{ form_label(form.typeCmd, "Durée de la visite*", {'label_attr': {'class': ''}}) }}
 
                     {{ form_widget(form.typeCmd, {'attr': {'class': 'form-control', 'placeholder': 'Votre adresse email'}}) }}
                     
@@ -50,6 +53,7 @@
 
                 <div class="col-md-12 col-sm-12">
                    <div class="form-group">
+                    {{ form_label(form.email, "Votre e-mail*", {'label_attr': {'class': ''}}) }}
 
 
                     {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Votre adresse email'}}) }}
@@ -59,36 +63,72 @@
                   </div>
 
                 </div>
-              
-   
+            
+                   {{ form_row(form.billets) }}
+                     <div class="col-md-12 col-sm-12" style="margin-top:20px;">
+              <div class="col-md-6 col-sm-6" style="text-align:right;">
+              <button href="#" id="add_billet" class="btn btn-noradius" style="background-color:white; border:2px solid #1043cc; color:#1043cc;" type="button" id="cf-submit" name="cf-submit">Ajouter un billet</button>
+             </div>
 
+             <div class="col-md-6 col-sm-6" style="text-align:left;">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-noradius'}}) }} 
+            </div>
+          </div>
 
               {{ form_end(form) }}          
           </div>
       </div>
     </div>
 
+
+
+
 <style type="text/css">
-.billetsDiv .noLabel label
+.billetDivIndi
 {
-  display: none;
+  background-color: rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+  margin-top: 15px;
+  padding:15px;
+  position:relative;
+}
+
+.deleteLink
+{
+  position:absolute;
+  top:5px;
+  right:5px;
+}
+
+.deleteLink a
+{
+color:red;
+}
+
+input[type="radio"], input[type="checkbox"]
+{
+  margin-left: 20px;
+}
+
+input[type="radio"] + label
+{
+  margin-left: 5px;
 }
 </style>
 
-
-
-
-
-
-
-
-<center><button href="#" id="add_billet" class="btn btn-noradius" type="button" id="cf-submit" name="cf-submit">Ajouter un billet</button></center>
+<p>Date: <input type="text" id="datepicker"></p>
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
 <script type="text/javascript">
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+
+
+
   $(document).ready(function() {
 
 
@@ -119,14 +159,17 @@
     function addCategory($container) {
 
       var template = $container.attr('data-prototype')
-        .replace(/__name__label__/g, 'Billet n°' + (index+1))
+        .replace(/__name__label__/g, 'Billet n°' + (index+1))      
         .replace(/__name__/g,        index)
       ;
 
 
+
+
       var $prototype = $(template);
 
-
+      $($prototype).addClass('col-md-6 col-sm-12');
+      $($prototype).children('div').addClass('billetDivIndi');
       addDeleteLink($prototype);
 
 
@@ -139,10 +182,10 @@
 
     function addDeleteLink($prototype) {
 
-      var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+      var $deleteLink = $('<div class="deleteLink"><a href="#" ><i class="fa fa-close"></i></a></div>');
 
+      $($prototype).children('div').append($deleteLink);
 
-      $prototype.append($deleteLink);
 
      
       $deleteLink.click(function(e) {

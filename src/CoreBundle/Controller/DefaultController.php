@@ -48,10 +48,21 @@ class Stripe {
 
 }
 
+function getAge($then) {
+
+   $now = new \DateTime();
+   $interval = $now->diff($then);
+   return $interval->y;
+
+}
+
+
+
 class DefaultController extends Controller
 {
     public function indexAction(Request $request)
-    {
+    { 
+      $totalPrice = 0; 
       $commande = new Commande();
    		$form = $this->createForm(CommandeType::class, $commande);
 
@@ -59,6 +70,9 @@ class DefaultController extends Controller
 
         if($form->handleRequest($request)->isValid())
         {
+
+
+
             $session = new Session(); 
 
             if($this->container->get('session')->isStarted())
@@ -71,8 +85,7 @@ class DefaultController extends Controller
               $session->start();
             }
 
-            $session->set('name', 'Commande');
-            $session->set('id', 1);
+
 
 
 
@@ -80,15 +93,51 @@ class DefaultController extends Controller
 
             foreach ($commande->getBillets() as $billet) {
               $commande->addBillet($billet);
+              $dateNaissance = $billet->getDateNaissance();
+              $tarifReduit = $billet->getTypeBillet();
+              $ageBillet = getAge($dateNaissance);
+
+
+              if($ageBillet < 4) // Inférieur à 4 ans gratuit
+              {
+                $prixDuBillet = 0;
+                $totalPrice += $prixDuBillet;
+              }
+              elseif($ageBillet >= 4 AND $ageBillet < 12) // Entre 4 et 12 ans : 8 euros
+              {
+                $prixDuBillet = 8;    
+                $totalPrice += $prixDuBillet;
+              }
+              elseif($ageBillet >= 60) // + de 60 ans : 12 euros
+              {
+                $prixDuBillet = 12;  
+                $totalPrice += $prixDuBillet;
+              }
+              else // Le reste
+              {
+                $prixDuBillet = 16;                  
+                $totalPrice += $prixDuBillet;
+              }
+
+              if($tarifReduit == 1 AND $prixDuBillet >= 10)
+              {
+                $ecartDePrix = $prixDuBillet-10;
+                $totalPrice -= $ecartDePrix;
+              }
+
 
             }
 
-            $commande->setTotalPrice('15'); 
+            $commande->setTotalPrice($totalPrice); 
             $commande->setDateCommande(new \DateTime('now'));
-            $commande->setDateVisite(new \DateTime('now'));
+
 
     	      $em->persist($commande);
             $em->flush();
+
+            $idCommande = $commande->getId();
+            $session->set('name', 'Commande');
+            $session->set('id', $idCommande);
 
             $status = "ok";
 
@@ -109,18 +158,26 @@ class DefaultController extends Controller
   
           if (!empty($token)) 
           {
-            $stripe = new Stripe('sk_test_wcvBBbp8nZqoRFfzGH3FFOw1');
-            $customer = $stripe->api('customers', [
-                'source' => $token,
-                'description' => "test",
-                'email' => "yohann-3396@hotmail.fr"
-            ]);
-            
-            $charge = $stripe->api('charges', [
-                'amount' => 100,
-                'currency' => 'eur',
-                'customer' => $customer->id
-            ]);
+
+            try
+            {
+              $stripe =  new Stripe('sk_test_wcvBBbp8nZqoRFfzGH3FFOw1');
+              $customer = $stripe->api('customers', ['source' => $token, 'description' => "test", 'email' => "yohann-3396@hotmail.fr"]);
+
+              $charge = $stripe->api('charges', [
+              'amount' => "100",
+              'currency' => 'eur',
+              'customer' => $customer->id
+             ]);
+            }catch (Exception $e) 
+            {
+              $errorMessage = $e->getMessage();
+              echo "<br><div id='alert' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button>Erreur!       ".$errorMessage." </div>";
+           }
+
+
+
+
 
             $status = "ok";
           }

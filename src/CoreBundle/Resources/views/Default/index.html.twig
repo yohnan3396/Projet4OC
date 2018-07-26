@@ -71,7 +71,7 @@
              </div>
 
              <div class="col-md-6 col-sm-6" style="text-align:left;">
-            {{ form_widget(form.save, {'attr': {'class': 'btn btn-noradius'}}) }} 
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-noradius', 'label': 'Passer au paiement'}}) }} 
             </div>
           </div>
 
@@ -87,7 +87,7 @@
             </div>
 
 
-            <form action="{{ path('core_homepage') }}" id="form-paymentStripe" method="get">
+            <form action="{{ path('core_homepage') }}" id="form-paymentStripe" style="display:none;" method="get">
     
 
                 <DIV class="form-group">
@@ -306,7 +306,7 @@ $("[name=corebundle_commande]").submit(function(e){
         dataType: 'json',
         success: function(data)
         {
-          alert(data.status);
+
           if(data.status == "ok")
           {
             $("[name=corebundle_commande]").fadeOut();

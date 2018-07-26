@@ -21,25 +21,25 @@ class BilletType extends AbstractType
         $builder
           ->add('nom', TextType::class, array(
             'attr' => ['class' => 'form-control'],
-            'label' => "Nom",
+            'label' => "Nom*",
           ))
           ->add('prenom', TextType::class, array(
             'attr' => ['class' => 'form-control'],
-            'label' => "Prénom",         
+            'label' => "Prénom*",         
           ))
           ->add('country', CountryType::class, array(
             'attr' => ['class' => 'form-control'],
-            'label' => "Pays de résidence",            
+            'label' => "Pays de résidence*",            
           ))
           ->add('dateNaissance', DateType::class, array(
             'attr' => ['class' => 'form-control js-datepicker', 'format' => 'dd/MM/yyyy'],
-            'label' => "Date de naissance",   
+            'label' => "Date de naissance*",   
             'widget' => 'single_text'
           ))
           ->add('typeBillet', ChoiceType::class, array(
             'choices' => array('Normal' => '0', 'Réduit*' => '1'),
             'expanded' => true,
-            'label' => "Type de billet",   
+            'label' => "Type de billet*",   
             'multiple' => false,
             'attr' => ['class' => 'form-control']         
           ));

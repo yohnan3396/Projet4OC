@@ -75,10 +75,62 @@
             </div>
           </div>
 
-              {{ form_end(form) }}          
+              {{ form_end(form) }}     
+
+
+            <div class="col-md-12 col-sm-12" >
+              <DIV class="alert alert-danger" id="errorPayment"  style="display:none; margin-top:20px;" role="alert" ></DIV>
+            </div>
+
+            <div class="col-md-12 col-sm-12" style="text-align:left;">
+              <center><img src="https://leskits.com/assets/img/loader.svg" id="loaderPayment" style="display:none;"></center>
+            </div>
+
+
+            <form action="{{ path('core_homepage') }}" id="form-paymentStripe" method="get">
+    
+
+                <DIV class="form-group">
+                  <div class="col-md-12 col-sm-12">
+                      <LABEL>Numéro de carte bancaire</LABEL>
+                      <INPUT data-stripe="number"  type="text" class="form-control requiredInput" required>
+                  </DIV>
+               </div>
+
+                <div class="col-md-4 col-sm-4">
+                  <DIV class="form-group">
+                      <LABEL>Mois d'expiration </LABEL>
+                      <INPUT data-stripe="exp_month" type="text" class="form-control requiredInput" required>
+                  </DIV>
+               </div>
+
+                <div class="col-md-4 col-sm-4">
+                  <DIV class="form-group">
+                      <LABEL>Année d'expiration </LABEL>
+                      <INPUT data-stripe="exp_year" type="text" class="form-control requiredInput" required>
+                  </DIV>
+               </div>
+
+                <div class="col-md-4 col-sm-4">
+                  <DIV class="form-group">
+                    <LABEL>Code CVC</LABEL>
+                    <INPUT data-stripe="cvc" type="text" class="form-control requiredInput" required>
+                 </DIV>
+              </div>
+
+
+              <input type="hidden" id="stripeToken" name="stripeToken">
+              <div class="col-md-12 col-sm-12">
+                 <center><BUTTON type="button" onclick="submitFormStripe()" id="buttonPay" class="btn btn-noradius">Payer (<span class="prix"></span> euros)</BUTTON></center>
+              </div>
+          </form>
+
+
           </div>
       </div>
     </div>
+
+
 
 
 
@@ -122,6 +174,157 @@ input[type="radio"] + label
 
 
 <script type="text/javascript">
+
+
+
+      
+
+function submitFormStripe()
+{
+var $form = $('#form-paymentStripe');
+
+ if( !$(".requiredInput").val() ) 
+ {
+  $("#errorPayment").show();
+  $("#errorPayment").html('Vous n\'avez pas indiquer votre informations de paiement.');
+ }
+ else
+ {
+
+
+
+$("#buttonPay").attr('disabled', true);
+$("#errorPayment").hide();
+$("#errorPayment").html('');
+
+
+
+
+
+
+Stripe.setPublishableKey('pk_test_D7J6Jk5fEdihQT5AWzfTZC9x');
+
+       Stripe.card.createToken($form, function (status, response) {
+                if (response.error) {
+            
+                    $("#errorPayment").show();
+                 
+
+var errorMessages = {
+  incorrect_number: "Le numéro de carte est incorrect.",
+  invalid_number: "Le numéro de carte est incorrect.",
+  invalid_expiry_month: "Le mois d'expiration de la carte est invalide.",
+  invalid_expiry_year: "L'année d'expiration de la carte est invalide.",
+  invalid_cvc: "Le code de sécurité à 3 chiffres est invalide.",
+  expired_card: "La carte a expiré.",
+  incorrect_cvc: "Le code de sécurité à 3 chiffres est incorrect.",
+  incorrect_zip: "Le zip code de la carte est faux.",
+  card_declined: "La carte a été décliné.",
+  missing: "Il n'y a pas de carte sur un client qui est en cours de facturation.",
+  processing_error: "Une erreur s'est produite lors du traitement de la carte.",
+  rate_limit:  "Frapper l'API trop rapidement. S'il vous plaît laissez-nous savoir si vous rencontrez toujours cette erreur."
+};
+
+  if ( response.error && response.error.type == 'card_error' ){
+    $( '#errorPayment' ).html( errorMessages[ response.error.code ] );
+  }
+
+
+
+
+                    $("#buttonPay").attr('disabled', false)
+                } else {
+                    var token = response.id
+                    $("#stripeToken").val(token);
+
+                   
+ $.ajax({
+  type: $form.attr('method'),
+  url: $form.attr('action'),
+  data: $form.serialize(),
+  dataType: 'json', // JSON
+     
+beforeSend: function() {
+
+$("#loaderPayment").show();
+           
+     },  
+ success: function(json) {
+
+$("#loaderPayment").hide();
+
+
+if(json.payment === 'yes') {
+$("#successPayment").show();
+$($form).hide();
+
+
+  window.setTimeout(function(){
+
+    location.reload();
+
+    }, 4000);
+
+
+} 
+else
+{
+$("#errorPayment").show();
+$("#errorPayment").html(json.payment);
+
+}
+                                               
+  }
+                
+                  
+
+                });
+                  
+
+                  
+
+
+
+                }
+            })
+
+ }
+}
+
+ 
+
+
+$("[name=corebundle_commande]").submit(function(e){
+
+    e.preventDefault(); //Prevent Default action.
+    var formURL = "{{ path('core_homepage') }}";
+    var formData = $(this).serialize();
+    $.ajax({
+        url: formURL,
+        type: 'POST',
+        data:  formData,
+        dataType: 'json',
+        success: function(data)
+        {
+          alert(data.status);
+          if(data.status == "ok")
+          {
+            $("[name=corebundle_commande]").fadeOut();
+            $("#form-paymentStripe").fadeIn();
+            $(".mb-50").html('Paiement');
+          }
+        },
+        error: function(data)
+        {
+        }
+    });
+
+
+});
+
+
+
+
 function disableDays(date) {
 
   var holidays = ["2018-08-15","2018-11-01","2018-12-25"];
@@ -132,7 +335,6 @@ function disableDays(date) {
 
 }
 var dateToday = new Date(); 
-
 
 
 

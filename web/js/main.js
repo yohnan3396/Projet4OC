@@ -1254,34 +1254,7 @@ License: https://themeforest.net/licenses/standard
 	}
 
 
-	// Contact Form
-	function init_ED_ContactForm() {
-		var $contactForm = $('.contact-forn');
-		if( $contactForm.length < 1 ){ return true; }
 
-		$contactForm.each( function(){
-			var element = $(this),
-				elementAlert = element.attr('data-alert-type'),
-				elementResult = element.find('.contact-form-result');
-
-			element.find('form').validate({
-				submitHandler: function(form) {
-					elementResult.hide();
-
-					$(form).ajaxSubmit({
-						target: elementResult,
-						dataType: 'json',
-						success: function( data ) {
-							elementResult.html( data.message ).fadeIn( 400 );
-							if( data.alert != 'error' ) { $(form).clearForm(); }
-						}
-					});
-				}
-			});
-
-		});
-	}
-	
 	
 	// Google Maps
 	function init_ED_GMaps() {
@@ -1341,7 +1314,6 @@ License: https://themeforest.net/licenses/standard
 		init_ED_Plugins();
 		init_ED_PhotoSwipe();
 		init_ED_Mailchimp();
-		init_ED_ContactForm();
 		init_ED_GMaps();
 	});
 	
@@ -1353,11 +1325,3 @@ License: https://themeforest.net/licenses/standard
 
 })(jQuery);
 
-//Google Tracking Code
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-84802319-1', 'auto');
-ga('send', 'pageview');

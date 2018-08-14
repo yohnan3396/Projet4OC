@@ -4,7 +4,8 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use CoreBundle\Validator\CommandeCheckDay as CheckDay;
+use CoreBundle\Validator\CommandeCheckHour as CheckHour;
 
 /**
 * Commande
@@ -14,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 */
 class Commande
 {
-
 
 /**
  * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Billet", mappedBy="commande", cascade={"persist", "remove"})
@@ -47,21 +47,20 @@ private $email;
 
 /**
  * @var string
- *
  * @ORM\Column(name="typeCmd", type="string", length=255)
  */
 private $typeCmd;
 
 /**
  * @var int
- *
+ * @CheckHour
  * @ORM\Column(name="totalPrice", type="integer")
  */
 private $totalPrice;
 
 /**
  * @var \DateTime
- *
+ * @CheckDay
  * @ORM\Column(name="dateVisite", type="date")
  */
 private $dateVisite;

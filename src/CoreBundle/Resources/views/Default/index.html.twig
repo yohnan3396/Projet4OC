@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
           <div class="contact-forn">
-              {{ form_start(form, {'attr': {'class': 'mb-0'}}) }}  
+              {{ form_start(form, {'attr': {'class': 'mb-0', 'novalidate': 'novalidate'}}) }}  
 
               {{ form_errors(form) }}
                 
@@ -306,12 +306,17 @@ $("[name=corebundle_commande]").submit(function(e){
         dataType: 'json',
         success: function(data)
         {
-
+          alert(data);
           if(data.status == "ok")
           {
             $("[name=corebundle_commande]").fadeOut();
             $("#form-paymentStripe").fadeIn();
             $(".mb-50").html('Paiement');
+          }
+          else
+          {
+
+            alert(JSON.stringify(data.status));
           }
         },
         error: function(data)

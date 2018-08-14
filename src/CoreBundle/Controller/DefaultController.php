@@ -71,8 +71,6 @@ class DefaultController extends Controller
         if($form->handleRequest($request)->isValid())
         {
 
-
-
             $session = new Session(); 
 
             if($this->container->get('session')->isStarted())
@@ -84,10 +82,6 @@ class DefaultController extends Controller
 
               $session->start();
             }
-
-
-
-
 
     	      $em = $this->getDoctrine()->getManager();
 
@@ -145,10 +139,10 @@ class DefaultController extends Controller
 	      }
         else
         {
-          $status = "invalid";
+          $status = $form->getErrors();
         }
-
-      return new Response(json_encode(array('status'=>$status)));        
+        echo $form['dateVisite']->getErrors();
+      return new Response();        
 
       }
       elseif($request->isMethod('GET') AND $request->get('stripeToken'))
@@ -173,7 +167,7 @@ class DefaultController extends Controller
             {
               $errorMessage = $e->getMessage();
               echo "<br><div id='alert' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button>Erreur!       ".$errorMessage." </div>";
-           }
+            }
 
 
 

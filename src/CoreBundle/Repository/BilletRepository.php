@@ -10,4 +10,16 @@ namespace CoreBundle\Repository;
  */
 class BilletRepository extends \Doctrine\ORM\EntityRepository
 {
+
+  public function getBilletsFor(\DateTime $date)
+    {
+        return $this->createQueryBuilder('b')
+            ->select('COUNT(b)')
+            ->leftJoin('CoreBundle:Commande', 'c', 'WITH', 'c.id = b.commande_id')
+            ->where('c.dateVisite = :date')
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
 }

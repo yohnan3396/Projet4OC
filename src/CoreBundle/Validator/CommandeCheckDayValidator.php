@@ -18,10 +18,12 @@ class CommandeCheckDayValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
+        $dateTodayMidnight = new \DateTime();
+        $dateTodayMidnightTimestamp = $dateTodayMidnight->getTimestamp();
 
-      // Vérifier si la date n'est pas passé, si c'est pas le 1er mai, le 1er novembre ou 25 décembre ou si c'est pas un mardi.
-      
-         if($value->format('D') == "Tue") 
+        $dateVisiteTimestamp = $value->getTimestamp();
+
+         if($value->format('D') == "Tue" OR $value->format('d/m') == "01/05" OR $value->format('d/m') == "01/11" OR $value->format('d/m') == "25/12" OR $dateTodayMidnightTimestamp > $dateVisiteTimestamp) 
          {
               $this->context->buildViolation($constraint->message)
                 ->addViolation();

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 
+
 class Stripe {
 
     private $api_key;
@@ -53,58 +54,82 @@ class Stripe {
 
 class DefaultController extends Controller
 {
+    protected function getErrorsAsArray($form)
+    {
+      $errors = array();
+      foreach ($form->getErrors() as $error)
+          $errors[] = $error->getMessage();
+
+      foreach ($form->all() as $key => $child) {
+          if ($err = $this->getErrorsAsArray($child))
+              $errors[$key] = $err;
+      }
+      return $errors;
+    }
+
+  
     public function indexAction(Request $request)
     { 
-
+      $nbBillets = 0;
       $commande = new Commande();
    		$form = $this->createForm(CommandeType::class, $commande);
 
 	    if ($request->isMethod('POST')) {
 
-        if($form->handleRequest($request)->isValid())
+       if($form->handleRequest($request)->isValid())
         {
 
             $session = new Session(); 
-
-    	      $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
 
             foreach ($commande->getBillets() as $billet) {
+
+              $nbBillets++;
               $commande->addBillet($billet);
             }
 
-            // Appel du service calcul du prix
+            // Appel des différents services
 
             $totalPrice = $this->get('core.MyService')->getTotalPrice($commande->getBillets());            
-
             $checkDateCommande = $this->get('core.MyService')->checkHourSameDay($commande->getDateVisite(), $commande->getTypeCmd()); 
+            $nbBillets = $this->get('core.MyService')->checkNbBillets($commande->getDateVisite(), $nbBillets); 
 
-            $commande->setTotalPrice($totalPrice); 
-            $commande->setDateCommande(new \DateTime('now'));
-
-
-    	      $em->persist($commande);
-            $em->flush();
-
-            $idCommande = $commande->getId();
-            $session->set('name', 'Commande');
-            $session->set('id', $idCommande);
-
-            $status = $checkDateCommande;
-
-      
-	      }
-        else
-        {
-
-            $errors = array();
-            foreach ($form->getErrors() as $error)
+            if($nbBillets == 0 OR $checkDateCommande == 0)
             {
-                $errors[] = $error->getMessage();
+              $formValid = 0;
+            }
+            else
+            {
+
+              $commande->setTotalPrice($totalPrice); 
+              $commande->setDateCommande(new \DateTime('now'));
+
+              $em->persist($commande);
+              $em->flush();
+
+              $idCommande = $commande->getId();
+              $session->set('name', 'Commande');
+              $session->set('id', $idCommande);
+
+              $status = 'ok';
+
+              $formValid = 1;
+
             }
 
-            $status = $errors;
-  
         }
+        else
+        {
+          $formValid = 0;
+        }
+
+        if($formValid == 0)
+        {
+            $status = $this->getErrorsAsArray($form);
+        }
+
+
+
         return new Response(json_encode(array('status'=>$status)));    
 
       }

@@ -107,4 +107,33 @@ class AllService
     }
 
 
+    /**
+     * Vérifier le nombre de billets
+     *
+     * @param \DateTime $dateVisite
+     * @param $nbBillets
+     * @return int
+     */
+
+    public function checkNbBillets($dateVisite, $nbBillets)
+    {
+      $nbBilletsDejaCommande = $this->getNombreBillets($dateVisite);
+
+
+      return $nbBilletsDejaCommande;
+
+    }
+
+    /**
+     * Récupérer le nombre de tickets pour une date
+     *
+     * @param \DateTime $date
+     * @return mixed
+     */
+    private function getNombreBillets(\DateTime $dateVisite)
+    {
+        return $this->em->getRepository('CoreBundle:Billet')->getBilletsFor($dateVisite);
+    }
+
+
 }

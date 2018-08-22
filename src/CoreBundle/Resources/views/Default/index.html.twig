@@ -18,6 +18,8 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
           <div class="contact-forn">
+            <div class="alert alert-danger" id="errorMsg"></div>
+       
               {{ form_start(form, {'attr': {'class': 'mb-0', 'novalidate': 'novalidate'}}) }}  
 
               {{ form_errors(form) }}
@@ -136,48 +138,42 @@
 
 
 <style type="text/css">
-.billetDivIndi
-{
-  background-color: rgba(0,0,0,0.05);
-  box-shadow: 2px 2px 4px rgba(0,0,0,0.05);
-  margin-top: 15px;
-  padding:15px;
-  position:relative;
-}
 
-.deleteLink
-{
-  position:absolute;
-  top:5px;
-  right:5px;
-}
+  .billetDivIndi
+  {
+    background-color: rgba(0,0,0,0.05);
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    margin-top: 15px;
+    padding:15px;
+    position:relative;
+  }
 
-.deleteLink a
-{
-color:red;
-}
+  .deleteLink
+  {
+    position:absolute;
+    top:5px;
+    right:5px;
+  }
 
-input[type="radio"], input[type="checkbox"]
-{
-  margin-left: 20px;
-}
+  .deleteLink a
+  {
+  color:red;
+  }
 
-input[type="radio"] + label
-{
-  margin-left: 5px;
-}
+  input[type="radio"], input[type="checkbox"]
+  {
+    margin-left: 20px;
+  }
+
+  input[type="radio"] + label
+  {
+    margin-left: 5px;
+  }
 </style>
 
 
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-
 <script type="text/javascript">
-
-
-
-      
 
 function submitFormStripe()
 {
@@ -295,7 +291,7 @@ $("#errorPayment").html(json.payment);
 
 
 $("[name=corebundle_commande]").submit(function(e){
-
+    $("#errorMsg").fadeOut().html('');
     e.preventDefault(); //Prevent Default action.
     var formURL = "{{ path('core_homepage') }}";
     var formData = $(this).serialize();
@@ -308,11 +304,14 @@ $("[name=corebundle_commande]").submit(function(e){
         {
           if(data.status == "ok")
           {
-
+            $("[name=corebundle_commande]").fadeOut();
+            $("#form-paymentStripe").fadeIn();
+            $(".mb-50").html('Paiement');
           }
           else
           {
-            alert(JSON.stringify(data.status));
+            $(".right-side").animate({ scrollTop: 0 }, "slow");
+            getFormErrors(data.status)
           }
         },
         error: function(data)
@@ -323,6 +322,28 @@ $("[name=corebundle_commande]").submit(function(e){
 
 });
 
+function getFormErrors(data)
+{
+    $("#errorMsg").fadeIn();
+
+    var errorMsg = '';
+    if (data)
+    {
+        for (key in data)
+        {
+            if (data[key]['0'].length > 1)
+     
+                  $("#errorMsg").append(data[key]['0'] + "<br>");
+            else
+                  $("#errorMsg").append(data[key] + "<br>");
+        }
+    }
+
+    return errorMsg;
+
+    alert(errorMsg);
+}
+ 
 
 
 

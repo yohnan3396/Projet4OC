@@ -32,11 +32,19 @@ private $commande;
 private $id;
 
 /**
+ * @var int
+ *
+ * @ORM\Column(name="commande_id", type="integer")
+ */
+private $commande_id;
+
+/**
  * @var string
  *
  * @ORM\Column(name="nom", type="string", length=255)
  */
 private $nom;
+
 
 /**
  * @var string

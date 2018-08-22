@@ -39,10 +39,15 @@ private $dateCommande;
 
 /**
  * @var string
- * @Assert\NotBlank()
+ * @Assert\Email(
+ *     message = "L'email '{{ value }}' est invalide.",
+ *     checkMX = true
+ * )
  * @ORM\Column(name="email", type="string", length=255)
  */
+
 private $email;
+
 
 /**
  * @var string

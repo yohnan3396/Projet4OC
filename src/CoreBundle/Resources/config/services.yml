@@ -1,4 +1,4 @@
 services:
-#    core.example:
-#        class: CoreBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  core.MyService:
+    class: CoreBundle\MyService\AllService
+    arguments: ["@doctrine.orm.entity_manager"]

@@ -48,13 +48,6 @@ class Stripe {
 
 }
 
-function getAge($then) {
-
-   $now = new \DateTime();
-   $interval = $now->diff($then);
-   return $interval->y;
-
-}
 
 
 
@@ -62,7 +55,7 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     { 
-      $totalPrice = 0; 
+
       $commande = new Commande();
    		$form = $this->createForm(CommandeType::class, $commande);
 
@@ -73,54 +66,17 @@ class DefaultController extends Controller
 
             $session = new Session(); 
 
-            if($this->container->get('session')->isStarted())
-            {
-
-            }
-            else
-            {
-
-              $session->start();
-            }
-
     	      $em = $this->getDoctrine()->getManager();
 
             foreach ($commande->getBillets() as $billet) {
               $commande->addBillet($billet);
-              $dateNaissance = $billet->getDateNaissance();
-              $tarifReduit = $billet->getTypeBillet();
-              $ageBillet = getAge($dateNaissance);
-
-
-              if($ageBillet < 4) // Inférieur à 4 ans gratuit
-              {
-                $prixDuBillet = 0;
-                $totalPrice += $prixDuBillet;
-              }
-              elseif($ageBillet >= 4 AND $ageBillet < 12) // Entre 4 et 12 ans : 8 euros
-              {
-                $prixDuBillet = 8;    
-                $totalPrice += $prixDuBillet;
-              }
-              elseif($ageBillet >= 60) // + de 60 ans : 12 euros
-              {
-                $prixDuBillet = 12;  
-                $totalPrice += $prixDuBillet;
-              }
-              else // Le reste
-              {
-                $prixDuBillet = 16;                  
-                $totalPrice += $prixDuBillet;
-              }
-
-              if($tarifReduit == 1 AND $prixDuBillet >= 10)
-              {
-                $ecartDePrix = $prixDuBillet-10;
-                $totalPrice -= $ecartDePrix;
-              }
-
-
             }
+
+            // Appel du service calcul du prix
+
+            $totalPrice = $this->get('core.MyService')->getTotalPrice($commande->getBillets());            
+
+            $checkDateCommande = $this->get('core.MyService')->checkHourSameDay($commande->getDateVisite(), $commande->getTypeCmd()); 
 
             $commande->setTotalPrice($totalPrice); 
             $commande->setDateCommande(new \DateTime('now'));
@@ -133,16 +89,23 @@ class DefaultController extends Controller
             $session->set('name', 'Commande');
             $session->set('id', $idCommande);
 
-            $status = "ok";
+            $status = $checkDateCommande;
 
       
 	      }
         else
         {
-          $status = $form->getErrors();
+
+            $errors = array();
+            foreach ($form->getErrors() as $error)
+            {
+                $errors[] = $error->getMessage();
+            }
+
+            $status = $errors;
+  
         }
-        echo $form['dateVisite']->getErrors();
-      return new Response();        
+        return new Response(json_encode(array('status'=>$status)));    
 
       }
       elseif($request->isMethod('GET') AND $request->get('stripeToken'))

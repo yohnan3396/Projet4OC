@@ -6,5 +6,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class CommandeCheckDay extends Constraint
 {
- public $message = 'Désolé le musée est fermé ce jour là.';
+	public $message = 'Le musée est fermé ce jour-là.';
 }

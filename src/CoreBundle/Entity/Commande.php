@@ -5,7 +5,6 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use CoreBundle\Validator\CommandeCheckDay as CheckDay;
-use CoreBundle\Validator\CommandeCheckHour as CheckHour;
 
 /**
 * Commande
@@ -53,7 +52,7 @@ private $typeCmd;
 
 /**
  * @var int
- * @CheckHour
+ * 
  * @ORM\Column(name="totalPrice", type="integer")
  */
 private $totalPrice;

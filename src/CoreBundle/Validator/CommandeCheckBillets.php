@@ -6,5 +6,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class CommandeCheckBillets extends Constraint
 {
- public $message = 'Désolé il n\'y plus de places ce jour là.;
+ public $message = 'Désolé il n\'y plus de places ce jour là.';
 }

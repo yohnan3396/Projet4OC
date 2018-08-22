@@ -2,3 +2,8 @@ services:
   core.MyService:
     class: CoreBundle\MyService\AllService
     arguments: ["@doctrine.orm.entity_manager"]
+  core.Payment:
+    class: CoreBundle\Payment\Payment
+    arguments: ["@doctrine.orm.entity_manager", "%stripe_key%"]
+
+

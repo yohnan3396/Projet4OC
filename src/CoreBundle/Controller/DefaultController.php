@@ -10,48 +10,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 
 
-class Stripe {
-
-    private $api_key;
-
-    /**
-     * Créer une nouvelle instance de Stripe
-     * @param string $api_key
-     */
-    public function __construct(string $api_key) {
-        $this->api_key = $api_key;
-    }
-
-    /**
-     * @param string $endpoint Point de l'API à appeller
-     * @param array|null $data Données à envoyer à l'API
-     * @return stdClass
-     * @throws Exception
-     */
-    public function api(string $endpoint, array $data = null): stdClass {
-        $ch = curl_init();
-        curl_setopt_array($ch, [
-            CURLOPT_URL => "https://api.stripe.com/v1/$endpoint",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_USERPWD => $this->api_key,
-            CURLOPT_HTTPAUTH => CURLAUTH_BASIC
-        ]);
-        if ($data != null) {
-           curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        }
-        $response = json_decode(curl_exec($ch));
-        curl_close($ch);
-        if (property_exists($response, 'error')) {
-            throw new Exception($response->error->message);
-        }
-        return $response;
-    }
-
-}
-
-
-
-
 class DefaultController extends Controller
 {
     protected function getErrorsAsArray($form)
@@ -67,7 +25,7 @@ class DefaultController extends Controller
       return $errors;
     }
 
-  
+
     public function indexAction(Request $request)
     { 
       $nbBillets = 0;
@@ -108,8 +66,7 @@ class DefaultController extends Controller
               $em->flush();
 
               $idCommande = $commande->getId();
-              $session->set('name', 'Commande');
-              $session->set('id', $idCommande);
+              $session->set('commande', $commande);
 
               $status = 'ok';
 
@@ -136,47 +93,31 @@ class DefaultController extends Controller
       elseif($request->isMethod('GET') AND $request->get('stripeToken'))
       {
 
+
         $token = $request->get('stripeToken');
   
-          if (!empty($token)) 
-          {
+        if (!empty($token)) 
+        {
 
-            try
-            {
-              $stripe =  new Stripe('sk_test_wcvBBbp8nZqoRFfzGH3FFOw1');
-              $customer = $stripe->api('customers', ['source' => $token, 'description' => "test", 'email' => "yohann-3396@hotmail.fr"]);
+          // On récupére la commande en cours
+          $commande = $this->getSession()->get('commande');
 
-              $charge = $stripe->api('charges', [
-              'amount' => "100",
-              'currency' => 'eur',
-              'customer' => $customer->id
-             ]);
-            }catch (Exception $e) 
-            {
-              $errorMessage = $e->getMessage();
-              echo "<br><div id='alert' class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>&times;</button>Erreur!       ".$errorMessage." </div>";
-            }
+      
+          if($this->get('core.Payment')->launchPayment($commande, $request)){
 
+            return new Response(json_encode(array('status'=> 'ok')));    
 
-
-
-
-            $status = "ok";
+            // On doit changer la valeur de la commande à payé + envoyer un mail + afficher un message de confirmation.
           }
           else
           {
-            $status = "invalid";
+             
+             // Erreur de payment
           }
-
-
- 
-          return new Response(json_encode(array('status'=>$status)));    
-
-
-
-
+          
       }
 
+      }
 
 
    		return $this->render('@Core/Default/index.html.twig', array(

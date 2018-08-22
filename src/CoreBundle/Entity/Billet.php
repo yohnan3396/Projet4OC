@@ -48,7 +48,7 @@ private $nom;
 
 /**
  * @var string
- * @Assert\notBlank(message="Trop long")
+ * @Assert\NotBlank(message="Trop long")
  * @ORM\Column(name="prenom", type="string", length=255)
  */
 private $prenom;

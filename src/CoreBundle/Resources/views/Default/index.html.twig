@@ -177,114 +177,93 @@
 
 function submitFormStripe()
 {
-var $form = $('#form-paymentStripe');
+  var $form = $('#form-paymentStripe');
 
- if( !$(".requiredInput").val() ) 
- {
-  $("#errorPayment").show();
-  $("#errorPayment").html('Vous n\'avez pas indiquer votre informations de paiement.');
- }
- else
- {
-
-
-
-$("#buttonPay").attr('disabled', true);
-$("#errorPayment").hide();
-$("#errorPayment").html('');
-
-
-
-
-
-
-Stripe.setPublishableKey('pk_test_D7J6Jk5fEdihQT5AWzfTZC9x');
-
-       Stripe.card.createToken($form, function (status, response) {
-                if (response.error) {
-            
-                    $("#errorPayment").show();
-                 
-
-var errorMessages = {
-  incorrect_number: "Le numéro de carte est incorrect.",
-  invalid_number: "Le numéro de carte est incorrect.",
-  invalid_expiry_month: "Le mois d'expiration de la carte est invalide.",
-  invalid_expiry_year: "L'année d'expiration de la carte est invalide.",
-  invalid_cvc: "Le code de sécurité à 3 chiffres est invalide.",
-  expired_card: "La carte a expiré.",
-  incorrect_cvc: "Le code de sécurité à 3 chiffres est incorrect.",
-  incorrect_zip: "Le zip code de la carte est faux.",
-  card_declined: "La carte a été décliné.",
-  missing: "Il n'y a pas de carte sur un client qui est en cours de facturation.",
-  processing_error: "Une erreur s'est produite lors du traitement de la carte.",
-  rate_limit:  "Frapper l'API trop rapidement. S'il vous plaît laissez-nous savoir si vous rencontrez toujours cette erreur."
-};
-
-  if ( response.error && response.error.type == 'card_error' ){
-    $( '#errorPayment' ).html( errorMessages[ response.error.code ] );
+  if( !$(".requiredInput").val() ) 
+  {
+    $("#errorPayment").show();
+    $("#errorPayment").html('Vous n\'avez pas indiquer votre informations de paiement.');
   }
+  else
+  {
+
+    $("#errorPayment").hide();
+    $("#errorPayment").html('');
+
+    Stripe.setPublishableKey('pk_test_D7J6Jk5fEdihQT5AWzfTZC9x');
+
+    Stripe.card.createToken($form, function (status, response) {
+      if (response.error) {
+
+        $("#errorPayment").show();
 
 
+        var errorMessages = {
+        incorrect_number: "Le numéro de carte est incorrect.",
+        invalid_number: "Le numéro de carte est incorrect.",
+        invalid_expiry_month: "Le mois d'expiration de la carte est invalide.",
+        invalid_expiry_year: "L'année d'expiration de la carte est invalide.",
+        invalid_cvc: "Le code de sécurité à 3 chiffres est invalide.",
+        expired_card: "La carte a expiré.",
+        incorrect_cvc: "Le code de sécurité à 3 chiffres est incorrect.",
+        incorrect_zip: "Le zip code de la carte est faux.",
+        card_declined: "La carte a été décliné.",
+        missing: "Il n'y a pas de carte sur un client qui est en cours de facturation.",
+        processing_error: "Une erreur s'est produite lors du traitement de la carte.",
+        rate_limit:  "Frapper l'API trop rapidement. S'il vous plaît laissez-nous savoir si vous rencontrez toujours cette erreur."
+        };
 
+        if ( response.error && response.error.type == 'card_error' ){
+        $( '#errorPayment' ).html( errorMessages[ response.error.code ] );
+        }
 
-                    $("#buttonPay").attr('disabled', false)
-                } else {
-                    var token = response.id
-                    $("#stripeToken").val(token);
+        $("#buttonPay").attr('disabled', false);
 
-                   
- $.ajax({
-  type: $form.attr('method'),
-  url: $form.attr('action'),
-  data: $form.serialize(),
-  dataType: 'json', // JSON
-     
-beforeSend: function() {
+      } 
+      else 
+      {
+        var token = response.id
+        $("#stripeToken").val(token);
 
-$("#loaderPayment").show();
+        $.ajax({
+          type: $form.attr('method'),
+          url: $form.attr('action'),
+          data: $form.serialize(),
+          dataType: 'json', // JSON
+
+          beforeSend: function() {
+
+            $("#loaderPayment").show();
+
+          },  
+          success: function(json) {
+
+            $("#loaderPayment").hide();
+
+            alert(json.status);
+
+            if(json.status === 'ok') {
+
+            } 
+            else
+            {
+              $("#errorPayment").show();
+              $("#errorPayment").html(json.status);
+
+            }
            
-     },  
- success: function(json) {
-
-$("#loaderPayment").hide();
+          }
 
 
-if(json.payment === 'yes') {
-$("#successPayment").show();
-$($form).hide();
+
+        });
 
 
-  window.setTimeout(function(){
 
-    location.reload();
+      }
+    })
 
-    }, 4000);
-
-
-} 
-else
-{
-$("#errorPayment").show();
-$("#errorPayment").html(json.payment);
-
-}
-                                               
   }
-                
-                  
-
-                });
-                  
-
-                  
-
-
-
-                }
-            })
-
- }
 }
 
  
@@ -307,6 +286,7 @@ $("[name=corebundle_commande]").submit(function(e){
             $("[name=corebundle_commande]").fadeOut();
             $("#form-paymentStripe").fadeIn();
             $(".mb-50").html('Paiement');
+            $(".prix").html(data.prix);
           }
           else
           {

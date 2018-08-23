@@ -87,7 +87,7 @@ class DefaultController extends Controller
 
 
 
-        return new Response(json_encode(array('status'=>$status)));    
+        return new Response(json_encode(array('status'=>$status, 'prix' => $totalPrice)));    
 
       }
       elseif($request->isMethod('GET') AND $request->get('stripeToken'))
@@ -100,20 +100,21 @@ class DefaultController extends Controller
         {
 
           // On récupére la commande en cours
-          $commande = $this->getSession()->get('commande');
+          $commande = $request->getSession()->get('commande');
 
       
           if($this->get('core.Payment')->launchPayment($commande, $request)){
 
-            return new Response(json_encode(array('status'=> 'ok')));    
-
+            $status = 'ok';
             // On doit changer la valeur de la commande à payé + envoyer un mail + afficher un message de confirmation.
           }
           else
           {
-             
+             $status = 'error';
              // Erreur de payment
           }
+            
+          return new Response(json_encode(array('status'=> 'ok')));  
           
       }
 

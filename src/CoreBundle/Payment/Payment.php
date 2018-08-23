@@ -8,8 +8,6 @@ use CoreBundle\Entity\Commande;
 use Doctrine\ORM\EntityManager;
 
 
-
-
 class Payment
 {
     protected $em;

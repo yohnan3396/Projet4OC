@@ -99,19 +99,16 @@ class DefaultController extends Controller
         if (!empty($token)) 
         {
 
-          // On récupére la commande en cours
           $commande = $request->getSession()->get('commande');
 
       
           if($this->get('core.Payment')->launchPayment($commande, $request)){
 
             $status = 'ok';
-            // On doit changer la valeur de la commande à payé + envoyer un mail + afficher un message de confirmation.
           }
           else
           {
-             $status = 'error';
-             // Erreur de payment
+             $status = 'Une erreur est survenue.';
           }
             
           return new Response(json_encode(array('status'=> 'ok')));  

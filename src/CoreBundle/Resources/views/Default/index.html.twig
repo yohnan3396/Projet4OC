@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
           <div class="contact-forn">
-            <div class="alert alert-danger" id="errorMsg"></div>
+            <div class="alert alert-danger" id="errorMsg" style="display:none;"></div>
        
               {{ form_start(form, {'attr': {'class': 'mb-0', 'novalidate': 'novalidate'}}) }}  
 
@@ -127,6 +127,10 @@
               </div>
           </form>
 
+            <div class="alert alert-success" id="successPayment" style="display:none;"><h2> Merci. </h2>
+
+            Votre paiement a bien été validé, vous allez recevoir un email de confirmation avec vos billets. Vous pourrez retrouver votre commande à cette adresse : <a href="#"></a></div>
+
 
           </div>
       </div>
@@ -169,6 +173,7 @@
   {
     margin-left: 5px;
   }
+
 </style>
 
 
@@ -189,6 +194,7 @@ function submitFormStripe()
 
     $("#errorPayment").hide();
     $("#errorPayment").html('');
+    $("#buttonPay").attr('disabled', true);
 
     Stripe.setPublishableKey('pk_test_D7J6Jk5fEdihQT5AWzfTZC9x');
 
@@ -240,10 +246,10 @@ function submitFormStripe()
 
             $("#loaderPayment").hide();
 
-            alert(json.status);
-
             if(json.status === 'ok') {
 
+              $("#form-paymentStripe").fadeOut();
+              $("#successPayment").fadeIn();
             } 
             else
             {
@@ -321,7 +327,6 @@ function getFormErrors(data)
 
     return errorMsg;
 
-    alert(errorMsg);
 }
  
 
@@ -336,11 +341,7 @@ function disableDays(date) {
 
 
 }
-var dateToday = new Date(); 
-
-
-
-
+  var dateToday = new Date(); 
 
   $(document).ready(function() {
 

@@ -18,6 +18,52 @@ class AllService
      * @return float
      */
 
+    public function checkAllParameters($commande)
+    {
+
+      $nbBillets = 0;
+
+      foreach ($commande->getBillets() as $billet) 
+      {
+        $commande->addBillet($billet); 
+        $nbBillets++;
+      }      
+
+      $totalPrice = $this->getTotalPrice($commande->getBillets());
+      $checkDateCommande = $this->checkHourSameDay($commande->getDateVisite(), $commande->getTypeCmd());
+      $checkNbBillets = $this->checkNbBillets($commande->getDateVisite(), $nbBillets);
+      $status = array();
+
+      if($totalPrice == 0)
+      {
+        $status['totalPrice'] = "La commande ne peut pas contenir qu'un billet pour enfant.";
+        $formValid = 0;
+      }
+      
+
+      if($checkDateCommande == 0)
+      {
+        $status['checkDateCommande'] = "Vous ne pouvez pas commander de billets journée après 14h me jour même.";
+        $formValid = 0;
+      }
+      
+      if($checkNbBillets == 0)
+      {
+        $status['capacity'] = "La capacité du musée a été atteinte ce jour.";
+        $formValid = 0;
+      }
+
+      if($checkNbBillets != 0 AND $checkDateCommande != 0 AND $totalPrice != 0)
+      {
+        $status = "";
+        $formValid = 1;
+      }
+
+
+      return array($status, $totalPrice, $formValid);
+
+    }
+
     public function getAge($dateNaissance) {
 
        $now = new \DateTime();
@@ -67,7 +113,7 @@ class AllService
 
         }
 
-        return $totalPrice;    
+        return $totalPrice/2;    
 
     }
 
@@ -119,8 +165,17 @@ class AllService
     {
       $nbBilletsDejaCommande = $this->getNombreBillets($dateVisite);
 
+      if($nbBilletsDejaCommande + $nbBillets > 1000)
+      {
+        $nbBilletsDejaCommande = 0;
+      }
+      else
+      {
+        $nbBilletsDejaCommande = 1;
+      }
 
       return $nbBilletsDejaCommande;
+
 
     }
 

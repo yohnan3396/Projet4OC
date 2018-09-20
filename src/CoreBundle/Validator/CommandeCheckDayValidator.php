@@ -10,11 +10,6 @@ class CommandeCheckDayValidator extends ConstraintValidator
     protected $em;
     private $container;
 
-  //  public function __construct(EntityManagerInterface $em, $container)
-   // {
-      //  $this->em               = $em;
-  //      $this->container        = $container;
-//}
 
     public function validate($value, Constraint $constraint)
     {

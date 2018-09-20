@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController extends Controller
 {
+
     protected function getErrorsAsArray($form)
     {
       $errors = array();
@@ -28,35 +29,23 @@ class DefaultController extends Controller
 
     public function indexAction(Request $request)
     { 
-      $nbBillets = 0;
       $commande = new Commande();
+      $totalPrice = 0;
+      $formValid = 0;
    		$form = $this->createForm(CommandeType::class, $commande);
 
 	    if ($request->isMethod('POST')) {
 
        if($form->handleRequest($request)->isValid())
-        {
+       {
 
             $session = new Session(); 
             $em = $this->getDoctrine()->getManager();
 
-            foreach ($commande->getBillets() as $billet) {
 
-              $nbBillets++;
-              $commande->addBillet($billet);
-            }
+            list($status, $totalPrice, $formValid) = $this->get('core.MyService')->checkAllParameters($commande);    
 
-            // Appel des différents services
-
-            $totalPrice = $this->get('core.MyService')->getTotalPrice($commande->getBillets());            
-            $checkDateCommande = $this->get('core.MyService')->checkHourSameDay($commande->getDateVisite(), $commande->getTypeCmd()); 
-            $nbBillets = $this->get('core.MyService')->checkNbBillets($commande->getDateVisite(), $nbBillets); 
-
-            if($nbBillets == 0 OR $checkDateCommande == 0)
-            {
-              $formValid = 0;
-            }
-            else
+            if($formValid == 1)
             {
 
               $commande->setTotalPrice($totalPrice); 
@@ -65,7 +54,6 @@ class DefaultController extends Controller
               $em->persist($commande);
               $em->flush();
 
-              $idCommande = $commande->getId();
               $session->set('commande', $commande);
 
               $status = 'ok';
@@ -77,55 +65,53 @@ class DefaultController extends Controller
         }
         else
         {
-          $formValid = 0;
+          $status = $this->getErrorsAsArray($form);
         }
 
-        if($formValid == 0)
-        {
-            $status = $this->getErrorsAsArray($form);
-        }
-
-
-
-        return new Response(json_encode(array('status'=>$status, 'prix' => $totalPrice)));    
-
-      }
-      elseif($request->isMethod('GET') AND $request->get('stripeToken'))
-      {
-
-
-        $token = $request->get('stripeToken');
-  
-        if (!empty($token)) 
-        {
-
-          $commande = $request->getSession()->get('commande');
-
-      
-          if($this->get('core.Payment')->launchPayment($commande, $request)){
-
-            $status = 'ok';
-          }
-          else
-          {
-             $status = 'Une erreur est survenue.';
-          }
-            
-          return new Response(json_encode(array('status'=> 'ok')));  
-          
-      }
+        return new Response(json_encode(array('status'=> $status, 'prix' => $totalPrice)));    
 
       }
 
-
-   		return $this->render('@Core/Default/index.html.twig', array(
-      	'form' => $form->createView(),
-    	));
-
-
+      return $this->render('@Core/Default/index.html.twig', array(
+        'form' => $form->createView(),
+      ));
 
 
     }
+
+    public function paymentAction(Request $request)
+    {
+
+      if($request->isMethod('GET') AND $request->get('stripeToken'))
+      {
+
+        $token = $request->get('stripeToken');
+        $commande = $request->getSession()->get('commande');
+
+    
+        if($this->get('core.Payment')->launchPayment($commande, $request)){
+
+          $commande->setIsPurchased(1);    
+          $sendEmail = $this->get('core.Mailer')->sendTicket($commande);           
+          $status = 'ok';
+        }
+        else
+        {
+           $status = 'Une erreur est survenue.';
+        }
+          
+        return new Response(json_encode(array('status'=> 'ok')));  
+        
+        
+
+      }
+
+
+    }
+ 
+
+
+
 
 
 }

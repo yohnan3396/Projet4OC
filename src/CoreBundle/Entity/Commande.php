@@ -48,9 +48,15 @@ private $dateCommande;
 
 private $email;
 
+/**
+ * @var string
+ * @ORM\Column(name="isPurchased", type="integer", nullable=true)
+ */
+private $isPurchased;
 
 /**
  * @var string
+ * @Assert\NotBlank(message="Durée de la visite obligatoire.")
  * @ORM\Column(name="typeCmd", type="string", length=255)
  */
 private $typeCmd;
@@ -127,6 +133,31 @@ public function getEmail()
 {
     return $this->email;
 }
+
+/**
+ * Set isPurchased
+ *
+ * @param string $isPurchased
+ *
+ * @return Commandes
+ */
+public function setIsPurchased($isPurchased)
+{
+    $this->isPurchased = $isPurchased;
+
+    return $this;
+}
+
+/**
+ * Get isPurchased
+ *
+ * @return string
+ */
+public function getIsPurchased()
+{
+    return $this->isPurchased;
+}
+
 
 /**
  * Set typeCmd

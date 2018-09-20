@@ -5,5 +5,7 @@ services:
   core.Payment:
     class: CoreBundle\Payment\Payment
     arguments: ["@doctrine.orm.entity_manager", "%stripe_key%"]
-
+  core.email:
+    class: CoreBundle\Mailer\Mailer
+    arguments: ["@mailer", "%mailer_from%", "%mailer_reply%", "%mailer_name%"]
 

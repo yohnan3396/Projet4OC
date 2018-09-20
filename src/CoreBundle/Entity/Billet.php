@@ -48,28 +48,28 @@ private $nom;
 
 /**
  * @var string
- * @Assert\NotBlank(message="Trop long")
+ * @Assert\NotBlank(message="Prénom obligatoire.")
  * @ORM\Column(name="prenom", type="string", length=255)
  */
 private $prenom;
 
 /**
  * @var string
- *
+ * @Assert\NotBlank(message="Nom obligatoire.")
  * @ORM\Column(name="country", type="string", length=255)
  */
 private $country;
 
 /**
  * @var \DateTime
- *
+ * @Assert\Date(message="Date de naissance incorrect.")
  * @ORM\Column(name="dateNaissance", type="date")
  */
 private $dateNaissance;
 
 /**
  * @var int
- *
+ * @Assert\NotBlank(message="Tarif réduit ou normal obligatoire")
  * @ORM\Column(name="typeBillet", type="integer")
  */
 private $typeBillet;

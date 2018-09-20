@@ -7,14 +7,14 @@
   <body>
 
 
-
     <div class="row">
         <div class="col-md-10 col-md-offset-1 text-center">
             <h3 class="heading-uppercase">Billeterie</h3>
             <div class="divider divider-alt divider-dark divider-center"></div>
-           <p class="lead mb-50">Commander des billets</p>
+           <p class="lead mb-50">{{ 'accueil.title_form'|trans }}</p>
         </div>
     </div>
+
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
           <div class="contact-forn">
@@ -42,6 +42,7 @@
 
                 <div class="col-md-6 col-sm-6">
                    <div class="form-group">
+
                     {{ form_label(form.typeCmd, "Durée de la visite*", {'label_attr': {'class': ''}}) }}
 
                     {{ form_widget(form.typeCmd, {'attr': {'class': 'form-control', 'placeholder': 'Votre adresse email'}}) }}
@@ -55,6 +56,7 @@
 
                 <div class="col-md-12 col-sm-12">
                    <div class="form-group">
+
                     {{ form_label(form.email, "Votre e-mail*", {'label_attr': {'class': ''}}) }}
 
 
@@ -129,14 +131,12 @@
 
             <div class="alert alert-success" id="successPayment" style="display:none;"><h2> Merci. </h2>
 
-            Votre paiement a bien été validé, vous allez recevoir un email de confirmation avec vos billets. Vous pourrez retrouver votre commande à cette adresse : <a href="#"></a></div>
+            Votre paiement a bien été validé, vous allez recevoir un email de confirmation avec vos billets. </div>
 
 
           </div>
       </div>
     </div>
-
-
 
 
 

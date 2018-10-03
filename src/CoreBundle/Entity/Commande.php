@@ -254,7 +254,8 @@ public function addBillet(\CoreBundle\Entity\Billet $billet)
     $billet->setCommande($this);
 
     return $this;
-}/**
+}
+/**
  * Remove billet
  *
  * @param \CoreBundle\Entity\Billet $billet

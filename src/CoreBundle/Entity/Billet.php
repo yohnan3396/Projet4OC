@@ -17,7 +17,7 @@ class Billet
 
 
 /**
-* @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Commande", inversedBy="billets", cascade={"persist", "remove"})
+* @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Commande", inversedBy="billets")
 * @ORM\JoinColumn(name="commande_id", referencedColumnName="id")
 */
 private $commande;

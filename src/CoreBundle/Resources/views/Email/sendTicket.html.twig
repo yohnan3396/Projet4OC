@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <title>Email</title>
     <style>
       /* -------------------------------------
           GLOBAL RESETS
@@ -249,9 +249,9 @@
         <td>&nbsp;</td>
         <td class="container">
           <div class="content">
-
+            <center style="text-transform: uppercase; font-size:18px;"> Musée du louvre </center>
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+            <span class="preheader">Votre commande musée du louvre</span>
             <table class="main">
 
               <!-- START MAIN CONTENT AREA -->
@@ -260,8 +260,8 @@
                   <table border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p>Hi there,</p>
-                        <p>Sometimes you just want to send a simple HTML email with a simple design and clear call to action. This is it.</p>
+                        <p>Bonjour,</p>
+                        <p>Voici le résumé de votre commande de billets pour le musée du louvre : </p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
@@ -269,22 +269,34 @@
                                 <table border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="http://htmlemail.io" target="_blank">Call To Action</a> </td>
+                                      <td> Date de réservation : {{ commande.dateVisite|date('Y-m-d') }} </td>             
                                     </tr>
+                                    <tr>
+                                      <td> Type : {{ commande.typeCmd }} </td>
+                                    </tr>
+                                    <tr>
+                                      <td> Prix : {{ commande.totalPrice }} euros</td>
+                                    </tr>
+
                                   </tbody>
                                 </table>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                        <p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-                        <p>Good luck! Hope it works.</p>
+                        <p>Les billets</p>
+
+                       {% for visiteur in commande.getBillets %}
+                        <div style="margin-bottom: 10px; margin-top:10px; background-color: whitesmoke;">
+                          Nom du visiteur : {{ visiteur.nom }} {{ visiteur.prenom }} <br />
+                          Date de naissance : {{ visiteur.dateNaissance|date('Y-m-d') }}
+                        </div>
+                      {% endfor %}
                       </td>
                     </tr>
                   </table>
                 </td>
               </tr>
-
             <!-- END MAIN CONTENT AREA -->
             </table>
 
@@ -293,14 +305,12 @@
               <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+                    <span class="apple-link">Musée du louvre, Paris</span>
+        
                   </td>
                 </tr>
                 <tr>
-                  <td class="content-block powered-by">
-                    Powered by <a href="http://htmlemail.io">HTMLemail</a>.
-                  </td>
+      
                 </tr>
               </table>
             </div>

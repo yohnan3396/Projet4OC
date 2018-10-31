@@ -45,6 +45,7 @@ class ServicesTest extends \PHPUnit_Framework_TestCase
     public function testCheckHourSameDay()
     {
         $dateVisite = new \DateTime();
+        $dateToday = new \DateTime();
         $typeVisite = "Journée";
 
 

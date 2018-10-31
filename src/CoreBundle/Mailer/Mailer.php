@@ -1,7 +1,7 @@
 <?php
 namespace CoreBundle\Mailer;
 use Symfony\Component\Templating\EngineInterface;
-use Louvre\CoreBundle\Entity\Commande;
+use CoreBundle\Entity\Commande;
 class Mailer
 {
     protected $mailer;

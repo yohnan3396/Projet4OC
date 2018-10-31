@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 
 
@@ -79,7 +80,10 @@ class DefaultController extends Controller
 
     }
 
-    public function paymentAction(Request $request)
+  /**
+   * @Route("/stripePayment", name="stripePayment")
+   */
+    public function stripePaymentAction(Request $request)
     {
 
       if($request->isMethod('GET') AND $request->get('stripeToken'))
@@ -92,7 +96,7 @@ class DefaultController extends Controller
         if($this->get('core.Payment')->launchPayment($commande, $request)){
 
           $commande->setIsPurchased(1);    
-          $sendEmail = $this->get('core.Mailer')->sendTicket($commande);           
+          $sendEmail = $this->get('core.email')->sendTicket($commande);           
           $status = 'ok';
         }
         else

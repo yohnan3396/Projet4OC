@@ -18,7 +18,7 @@ class CommandeCheckDayValidator extends ConstraintValidator
 
         $dateVisiteTimestamp = $value->getTimestamp();
 
-         if($value->format('D') == "Tue" OR $value->format('d/m') == "01/05" OR $value->format('d/m') == "01/11" OR $value->format('d/m') == "25/12" OR $dateTodayMidnightTimestamp > $dateVisiteTimestamp) 
+         if($value->format('D') == "Tue" OR $value->format('d/m') == "01/05" OR $value->format('d/m') == "01/11" OR $value->format('d/m') == "25/12") 
          {
               $this->context->buildViolation($constraint->message)
                 ->addViolation();

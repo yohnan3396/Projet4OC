@@ -91,11 +91,15 @@ class DefaultController extends Controller
 
         $token = $request->get('stripeToken');
         $commande = $request->getSession()->get('commande');
-
+        $entityManager = $this->getDoctrine()->getManager();
+        $commande = $entityManager->getRepository(Commande::class)->find($commande->getId());
+        
     
         if($this->get('core.Payment')->launchPayment($commande, $request)){
 
-          $commande->setIsPurchased(1);    
+
+          $commande->setIsPurchased(1);  
+          $entityManager->flush(); 
           $sendEmail = $this->get('core.email')->sendTicket($commande);           
           $status = 'ok';
         }

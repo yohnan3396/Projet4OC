@@ -70,16 +70,17 @@
 
                 </div>
             
-                   {{ form_row(form.billets) }}
-                     <div class="col-md-12 col-sm-12" style="margin-top:20px;">
-              <div class="col-md-6 col-sm-6" style="text-align:right;">
-              <button href="#" id="add_billet" class="btn btn-noradius" style="background-color:white; border:2px solid #1043cc; color:#1043cc;" type="button" id="cf-submit" name="cf-submit">Ajouter un billet</button>
-             </div>
+                {{ form_row(form.billets) }}
 
-             <div class="col-md-6 col-sm-6" style="text-align:left;">
-            {{ form_widget(form.save, {'attr': {'class': 'btn btn-noradius', 'label': 'Passer au paiement'}}) }} 
-            </div>
-          </div>
+                <div class="col-md-12 col-sm-12" style="margin-top:20px;">
+                  <div class="col-md-6 col-sm-6" style="text-align:right;">
+                    <button href="#" id="add_billet" class="btn btn-noradius" style="background-color:white; border:2px solid #1043cc; color:#1043cc;" type="button" id="cf-submit" name="cf-submit">Ajouter un billet</button>
+                  </div>
+
+                  <div class="col-md-6 col-sm-6" style="text-align:left;">
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-noradius', 'label': 'Passer au paiement'}}) }} 
+                  </div>
+                </div>
 
               {{ form_end(form) }}     
 
@@ -91,7 +92,6 @@
             <div class="col-md-12 col-sm-12" style="text-align:left;">
               <center><img src="https://leskits.com/assets/img/loader.svg" id="loaderPayment" style="display:none;"></center>
             </div>
-
 
             <form action="{{ path('stripePayment') }}" id="form-paymentStripe" style="display:none;" method="get">
     
@@ -142,7 +142,6 @@
 
 
 
-
 <style type="text/css">
 
   .billetDivIndi
@@ -180,6 +179,7 @@
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 
 function submitFormStripe()
@@ -445,7 +445,7 @@ $(document).ready(function() {
 
 </div>
 
-  </body>
+</body>
 </html>
 
 {% endblock %}

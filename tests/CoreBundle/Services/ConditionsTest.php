@@ -2,11 +2,27 @@
 
 namespace test\CoreBundle\Services;
 use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ServicesTest extends \PHPUnit_Framework_TestCase
+class testFonctionnel extends WebTestCase
+{
+
+    // TEST UNITAIRE
+    public function testHomePage()
+    {
+
+        $client = static::createClient();
+        $client->request('GET', '/');
+
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+    }
+
+}
+
+class testUnitaires extends \PHPUnit_Framework_TestCase
 {
  
-
+    // TEST UNITAIRE
     public function testMercredi()
     {
 
@@ -39,7 +55,7 @@ class ServicesTest extends \PHPUnit_Framework_TestCase
             $boolean = 1;
          }
 
-         $this->assertEquals(1, $boolean);  
+         $this->assertEquals(0, $boolean);  
     }
 
     public function testCheckHourSameDay()

@@ -97,11 +97,11 @@ class DefaultController extends Controller
     
         if($this->get('core.Payment')->launchPayment($commande, $request)){
 
-
           $commande->setIsPurchased(1);  
           $entityManager->flush(); 
           $sendEmail = $this->get('core.email')->sendTicket($commande);           
           $status = 'ok';
+
         }
         else
         {
@@ -110,18 +110,9 @@ class DefaultController extends Controller
           
         return new Response(json_encode(array('status'=> 'ok')));  
         
-        
-
       }
 
-
     }
- 
-
-
-
-
-
 }
 
 
